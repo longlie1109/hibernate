@@ -1,5 +1,13 @@
 package DTO;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "khachhang")
 public class KhachHang {
     private int maKH;
     private String ho;
@@ -17,7 +25,9 @@ public class KhachHang {
         this.gioiTinh = gioiTinh;
         this.tongChiTieu = tongChiTieu;
     }
-
+    @Id
+    @GeneratedValue
+    @Column(name = "MaKH")
     public int getMaKH() {
         return maKH;
     }
@@ -26,6 +36,7 @@ public class KhachHang {
         this.maKH = maKH;
     }
 
+    @Column(name = "Ho")
     public String getHo() {
         return ho;
     }
@@ -33,7 +44,7 @@ public class KhachHang {
     public void setHo(String ho) {
         this.ho = ho;
     }
-
+    @Column(name = "Ten")
     public String getTen() {
         return ten;
     }
@@ -41,7 +52,7 @@ public class KhachHang {
     public void setTen(String ten) {
         this.ten = ten;
     }
-
+    @Column(name = "GioiTinh")
     public String getGioiTinh() {
         return gioiTinh;
     }
@@ -49,7 +60,7 @@ public class KhachHang {
     public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
-
+    @Column(name = "TongChiTieu")
     public int getTongChiTieu() {
         return tongChiTieu;
     }

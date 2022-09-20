@@ -5,38 +5,73 @@
  */
 package DAO;
 
+import DTO.HibernateUtils;
 import DTO.KhachHang;
+import DTO.SanPham;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 /**
  * @author User
  */
 public class KhachHangDAO {
-
+//	public ArrayList<KhachHang> getListKhachHang() {
+//        try {
+//            String sql = "SELECT * FROM khachhang WHERE TinhTrang=1";
+//            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+//            ResultSet rs = pre.executeQuery();
+//            ArrayList<KhachHang> dskh = new ArrayList<>();
+//            while (rs.next()) {
+//                KhachHang kh = new KhachHang();
+//                kh.setMaKH(rs.getInt(1));
+//                kh.setHo(rs.getString(2));
+//                kh.setTen(rs.getString(3));
+//                kh.setGioiTinh(rs.getString(4));
+//                kh.setTongChiTieu(rs.getInt(5));
+//                dskh.add(kh);
+//            }
+//            return dskh;
+//        } catch (SQLException ex) {
+//        }
+//        return null;
+//    }
     public ArrayList<KhachHang> getListKhachHang() {
+        ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
+
         try {
-            String sql = "SELECT * FROM khachhang WHERE TinhTrang=1";
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
-            ResultSet rs = pre.executeQuery();
-            ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
-            while (rs.next()) {
-                KhachHang kh = new KhachHang();
-                kh.setMaKH(rs.getInt(1));
-                kh.setHo(rs.getString(2));
-                kh.setTen(rs.getString(3));
-                kh.setGioiTinh(rs.getString(4));
-                kh.setTongChiTieu(rs.getInt(5));
-                dskh.add(kh);
-            }
+        	SessionFactory factory = HibernateUtils.getSessionFactory();
+    		Session session = factory.getCurrentSession();
+    		session.getTransaction().begin();
+    		String sql = "Select e from " + KhachHang.class.getName() + " e where TinhTrang = 1";
+//            String sql = "SELECT * FROM khachhang WHERE TinhTrang=1";
+            session.createQuery(sql);
+            Query<KhachHang> query = session.createQuery(sql);
+			List<KhachHang> danhsachkhachhang = query.getResultList();
+            
+            for (int i = 0; i <= danhsachkhachhang.size(); i++) {
+            	KhachHang kh = new KhachHang();
+            	kh.setMaKH(danhsachkhachhang.get(i).getMaKH());
+            	kh.setHo(danhsachkhachhang.get(i).getHo());
+            	kh.setTen(danhsachkhachhang.get(i).getTen());
+            	kh.setGioiTinh(danhsachkhachhang.get(i).getGioiTinh());
+            	kh.setTongChiTieu(danhsachkhachhang.get(i).getTongChiTieu());
+				dskh.add(kh);
+	        }
             return dskh;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
+//        	ex.printStackTrace();
+//        	return 
         }
-        return null;
+        return dskh;
     }
 
     public KhachHang getKhachHang(int maKH) {
