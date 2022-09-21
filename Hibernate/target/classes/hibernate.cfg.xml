@@ -31,7 +31,10 @@
 		<mapping class="DTO.SanPham" />
 		<mapping class="DTO.CTHoaDon"/>
 		<mapping class="DTO.ThongKe"/>
+<<<<<<< HEAD
 		<mapping class="DTO.HoaDon"/>
+=======
+>>>>>>> 850a547937ab8d784679ff0ad58904b8fd52cb59
 		<mapping class="DTO.KhachHang"/>
 	</session-factory>
 

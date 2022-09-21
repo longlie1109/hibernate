@@ -25,10 +25,16 @@ public class KhachHang {
         this.gioiTinh = gioiTinh;
         this.tongChiTieu = tongChiTieu;
     }
+<<<<<<< HEAD
 
     @Id
     @GeneratedValue
     @Column(name="MaKH")
+=======
+    @Id
+    @GeneratedValue
+    @Column(name = "MaKH")
+>>>>>>> 850a547937ab8d784679ff0ad58904b8fd52cb59
     public int getMaKH() {
         return maKH;
     }
@@ -36,7 +42,12 @@ public class KhachHang {
     public void setMaKH(int maKH) {
         this.maKH = maKH;
     }
+<<<<<<< HEAD
     @Column(name="Ho")
+=======
+
+    @Column(name = "Ho")
+>>>>>>> 850a547937ab8d784679ff0ad58904b8fd52cb59
     public String getHo() {
         return ho;
     }
@@ -44,7 +55,11 @@ public class KhachHang {
     public void setHo(String ho) {
         this.ho = ho;
     }
+<<<<<<< HEAD
     @Column(name="Ten")
+=======
+    @Column(name = "Ten")
+>>>>>>> 850a547937ab8d784679ff0ad58904b8fd52cb59
     public String getTen() {
         return ten;
     }
@@ -52,7 +67,11 @@ public class KhachHang {
     public void setTen(String ten) {
         this.ten = ten;
     }
+<<<<<<< HEAD
     @Column(name="GioiTinh")
+=======
+    @Column(name = "GioiTinh")
+>>>>>>> 850a547937ab8d784679ff0ad58904b8fd52cb59
     public String getGioiTinh() {
         return gioiTinh;
     }
@@ -60,7 +79,11 @@ public class KhachHang {
     public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
+<<<<<<< HEAD
     @Column(name="TongChiTieu")
+=======
+    @Column(name = "TongChiTieu")
+>>>>>>> 850a547937ab8d784679ff0ad58904b8fd52cb59
     public int getTongChiTieu() {
         return tongChiTieu;
     }
