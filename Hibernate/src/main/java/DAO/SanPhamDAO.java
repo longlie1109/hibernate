@@ -29,18 +29,17 @@ public class SanPhamDAO {
 			// String sql = "SELECT * FROM sanpham";
 			Query<SanPham> query = session.createQuery(sql);
 			List<SanPham> danhsachsanpham = query.getResultList();
-			
-			for (int i = 0; i <= danhsachsanpham.size(); i++) {
-				SanPham sp = new SanPham();
-				sp.setMaSP(danhsachsanpham.get(i).getMaSP());
-				sp.setTenSP(danhsachsanpham.get(i).getTenSP());
-				sp.setMaLoai(danhsachsanpham.get(i).getMaLoai());
-				sp.setSoLuong(danhsachsanpham.get(i).getSoLuong());
-				sp.setDonViTinh(danhsachsanpham.get(i).getDonViTinh());
-				sp.setHinhAnh(danhsachsanpham.get(i).getHinhAnh());
-				sp.setDonGia(danhsachsanpham.get(i).getDonGia());
-				dssp.add(sp);
-	        }
+			for(SanPham sp : danhsachsanpham) {
+				SanPham sanpham = new SanPham();
+				sanpham.setMaSP(sp.getMaSP());
+				sanpham.setTenSP(sp.getTenSP());
+				sanpham.setMaLoai(sp.getMaLoai());
+				sanpham.setSoLuong(sp.getSoLuong());
+				sanpham.setDonGia(sp.getDonGia());
+				sanpham.setDonViTinh(sp.getDonViTinh());
+				sanpham.setHinhAnh(sp.getHinhAnh());
+				dssp.add(sanpham);
+			}
 			session.getTransaction().commit();
 			return dssp;
 		} catch (Exception e) {
@@ -187,6 +186,7 @@ public class SanPhamDAO {
 			query.setParameter("donGia", sp.getDonGia());
 			int count = query.executeUpdate();
 			System.out.println(count);
+			
 			
 			if (count > 0) {
 				session.getTransaction().commit();

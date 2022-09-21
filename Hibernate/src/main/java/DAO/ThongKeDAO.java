@@ -1,9 +1,13 @@
 package DAO;
 
 import DTO.HibernateUtils;
+import DTO.HoaDon;
+import DTO.KhachHang;
+import DTO.NhanVien;
 import DTO.SanPham;
 import DTO.ThongKe;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +18,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.hibernate.type.LongType;
 
 import BUS.SanPhamBUS;
 import BUS.*;
@@ -44,7 +49,7 @@ public class ThongKeDAO {
 		thongKe.setTopSanPhamBanChay(getTopBanChay());
 		return thongKe;
 	}
-
+//
 //    public ArrayList<SanPham> getTopBanChay() {
 //        try {
 //            String sql = "SELECT MaSP, DaBan FROM (" +
@@ -98,17 +103,31 @@ public class ThongKeDAO {
 		return dssp;
 	}
 
-	private int getTongSoLuongSP() {
+	public int getTongSoLuongSP() {
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		long tongsanpham = 0;
 		try {
-			Statement stmt = MyConnect.conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM sanpham");
-			while (rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch (SQLException ex) {
-			return -1;
+			if(!session.getTransaction().isActive()) {
+			session.getTransaction().begin();
+			String sql = "select count(e) from " + SanPham.class.getName() + " e ";
+			Query<Long> query = session.createQuery(sql);
+			
+			tongsanpham=query.uniqueResult();
+			if(query.uniqueResult()==null) {
+				tongsanpham=0;
+				
+				}
+			session.getTransaction().commit();
+			return (int) tongsanpham;}
+			return (int) tongsanpham;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+			return (int) -1;
 		}
-		return 0;
+		
 	}
 
 	private String[] getDateString(int nam, int quy) {
@@ -142,60 +161,106 @@ public class ThongKeDAO {
 		return kq;
 	}
 
-	private int getTongThuQuy(int nam, int quy) {
+	public int getTongThuQuy(int nam, int quy) {
 		String[] dateString = getDateString(nam, quy);
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		long result=(long) 0;
 		try {
-			PreparedStatement prep = MyConnect.conn
-					.prepareStatement("SELECT SUM(TongTien) FROM hoadon " + "WHERE NgayLap >= ? AND NgayLap < ?");
-			prep.setString(1, dateString[0]);
-			prep.setString(2, dateString[1]);
-			ResultSet rs = prep.executeQuery();
-			while (rs.next()) {
-				return rs.getInt(1);
+			session.getTransaction().begin();
+			String sql = "SELECT SUM(TongTien) as sum FROM hoadon WHERE NgayLap >= :ngaylap AND NgayLap < :ngaylap1";
+			Query<Long> query = session.createNativeQuery(sql).addScalar("sum", LongType.INSTANCE);
+			query.setString("ngaylap", dateString[0]);
+			query.setString("ngaylap1", dateString[1]);
+			long tongdoanhthu = 0;
+			if( query.uniqueResult() != null) {
+				tongdoanhthu = query.uniqueResult();
+				//result = tongdoanhthu;
+				
 			}
-		} catch (SQLException ex) {
-			return -1;
+			session.getTransaction().commit();
+			return (int) tongdoanhthu;
+			
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+			return 0;
 		}
-		return 0;
+		
 	}
 
 	private int getSoLuongNhanVien() {
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		long tongnhanvien = 0;
 		try {
-			Statement stmt = MyConnect.conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM nhanvien");
-			while (rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch (SQLException ex) {
-			return -1;
+			if(!session.getTransaction().isActive()) {
+			session.getTransaction().begin();
+			String sql = "select count(e) from " + NhanVien.class.getName() + " e ";
+			Query<Long> query = session.createQuery(sql);
+			
+			tongnhanvien=query.uniqueResult();
+			if(query.uniqueResult()==null) {
+				tongnhanvien=0;
+				
+				}
+			session.getTransaction().commit();
+			return (int) tongnhanvien;}
+			return (int) tongnhanvien;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+			return (int) -1;
 		}
-		return 0;
 	}
 
 	private int getSoLuongKhachHang() {
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		long tongkhachhang = 0;
 		try {
-			Statement stmt = MyConnect.conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM khachhang");
-			while (rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch (SQLException ex) {
-			return -1;
+			if(!session.getTransaction().isActive()) {
+			session.getTransaction().begin();
+			String sql = "select count(e) from " + KhachHang.class.getName() + " e ";
+			Query<Long> query = session.createQuery(sql);
+			
+			tongkhachhang=query.uniqueResult();
+			if(query.uniqueResult()==null) {
+				tongkhachhang=0;
+				
+				}
+			session.getTransaction().commit();
+			return (int) tongkhachhang;}
+			return (int) tongkhachhang;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+			return (int) -1;
 		}
-		return 0;
 	}
 
 	public double getDoanhThuThang(int thang, int nam) {
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		Session session = factory.getCurrentSession();
 		try {
+			if(!session.getTransaction().isActive()) {
+				session.getTransaction().begin();
 			String thangBD = nam + "-" + thang + "-01";
 			String thangKT = nam + "-" + (thang + 1) + "-01";
-			String sql = "SELECT SUM(TongTien) FROM hoadon WHERE NgayLap BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)";
-			PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
-			pre.setString(1, thangBD);
-			pre.setString(2, thangKT);
-			ResultSet rs = pre.executeQuery();
-			while (rs.next()) {
-				return Double.parseDouble(rs.getInt(1) + "");
+			String sql = "SELECT SUM(TongTien) as sum FROM hoadon WHERE NgayLap BETWEEN CAST(:ngaylap AS DATE) AND CAST(:ngaylap1 AS DATE)";
+			Query<Double> query = session.createNativeQuery(sql).addScalar("sum", LongType.INSTANCE);
+			query.setString("ngaylap", thangBD);
+			query.setString("ngaylap1", thangKT);
+			double doanhthu=0;
+			if(query.getSingleResult()!=null) {
+				doanhthu=query.getSingleResult();
+			}
+			session.getTransaction().commit();
+			return (int) doanhthu;
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -221,4 +286,5 @@ public class ThongKeDAO {
 		}
 		return 0.0f;
 	}
+	
 }

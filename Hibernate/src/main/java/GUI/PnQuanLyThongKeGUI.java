@@ -45,7 +45,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
     CardLayout cardLayoutThongKe = new CardLayout();
     JPanel pnMain;
     JLabel lblMon1, lblMon2, lblMon3, lblMon4, lblMon5, lblSoLuong1, lblSoLuong2, lblSoLuong3, lblSoLuong4, lblSoLuong5;
-    private ChartPanel chartPanel;
+    //private ChartPanel chartPanel;
     JPanel pnThongKeChiTiet, pnChart;
     JButton btn_filter;
 
@@ -246,10 +246,10 @@ public class PnQuanLyThongKeGUI extends JPanel {
         pnChart = new TransparentPanel();
         pnChart.setBounds(0, 398, 1030, 441);
 
-        chartPanel = new ChartPanel(createChart());
-        chartPanel.setPreferredSize(new Dimension(1030, 441));
+        //chartPanel = new ChartPanel(createChart());
+       // chartPanel.setPreferredSize(new Dimension(1030, 441));
 
-        pnChart.add(chartPanel);
+       // pnChart.add(chartPanel);
         //================================
         pnThongKeChiTiet.add(pnChart);
         pnMain.add(pnThongKeChiTiet, "2");
@@ -262,7 +262,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         btnView.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 hienThiThongKe();
-                veLaiChart();
+               // veLaiChart();
                 cardLayoutThongKe.show(pnMain, "2");
             }
         });
@@ -285,22 +285,22 @@ public class PnQuanLyThongKeGUI extends JPanel {
         });
     }
 
-    private void veLaiChart() {
-        pnChart.removeAll();
-
-        chartPanel = new ChartPanel(createChart());
-        chartPanel.setPreferredSize(new Dimension(1030, 441));
-
-        pnChart.add(chartPanel);
-    }
-
-    private JFreeChart createChart() {
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Doanh thu nÄƒm " + Calendar.getInstance().get(Calendar.YEAR),
-                "ThÃ¡ng", "Doanh thu",
-                createDataset(), PlotOrientation.VERTICAL, false, false, false);
-        return barChart;
-    }
+//    private void veLaiChart() {
+//        pnChart.removeAll();
+//
+//        chartPanel = new ChartPanel(createChart());
+//        chartPanel.setPreferredSize(new Dimension(1030, 441));
+//
+//        pnChart.add(chartPanel);
+//    }
+//
+//    private JFreeChart createChart() {
+//        JFreeChart barChart = ChartFactory.createBarChart(
+//                "Doanh thu nÄƒm " + Calendar.getInstance().get(Calendar.YEAR),
+//                "ThÃ¡ng", "Doanh thu",
+//                createDataset(), PlotOrientation.VERTICAL, false, false, false);
+//        return barChart;
+//    }
 
     private CategoryDataset createDataset() {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -325,17 +325,18 @@ public class PnQuanLyThongKeGUI extends JPanel {
         lblDoanhThuQuy4.setText(dcf.format(thongKe.getTongThuQuy(4)));
         lblTongDoanhThu.setText(dcf.format(thongKe.getTongDoanhThu()));
 //bug vkl
-//      
-//        lblMon1.setText(thongKe.getTopSanPhamBanChay().get(0).getTenSP());
-//        lblMon2.setText(thongKe.getTopSanPhamBanChay().get(1).getTenSP());
-//        lblMon3.setText(thongKe.getTopSanPhamBanChay().get(2).getTenSP());
-//        lblMon4.setText(thongKe.getTopSanPhamBanChay().get(3).getTenSP());
-//        lblMon5.setText(thongKe.getTopSanPhamBanChay().get(4).getTenSP());
-//        lblSoLuong1.setText("" + thongKe.getTopSanPhamBanChay().get(0).getSoLuong());
-//        lblSoLuong2.setText("" + thongKe.getTopSanPhamBanChay().get(1).getSoLuong());
-//        lblSoLuong3.setText("" + thongKe.getTopSanPhamBanChay().get(2).getSoLuong());
-//        lblSoLuong4.setText("" + thongKe.getTopSanPhamBanChay().get(3).getSoLuong());
-//        lblSoLuong5.setText("" + thongKe.getTopSanPhamBanChay().get(4).getSoLuong());
+        ArrayList<SanPham> thongketemp = thongKe.getTopSanPhamBanChay();
+        
+        lblMon1.setText(thongketemp.get(0).getTenSP());
+        lblMon2.setText(thongketemp.get(1).getTenSP());
+        lblMon3.setText(thongketemp.get(2).getTenSP());
+        lblMon4.setText(thongketemp.get(3).getTenSP());
+        lblMon5.setText(thongketemp.get(4).getTenSP());
+        lblSoLuong1.setText("" + thongketemp.get(0).getSoLuong());
+        lblSoLuong2.setText("" + thongketemp.get(1).getSoLuong());
+        lblSoLuong3.setText("" + thongketemp.get(2).getSoLuong());
+        lblSoLuong4.setText("" + thongketemp.get(3).getSoLuong());
+        lblSoLuong5.setText("" + thongketemp.get(4).getSoLuong());
     }
 
 }

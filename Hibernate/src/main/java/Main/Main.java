@@ -1,5 +1,6 @@
 package Main;
 
+import DTO.HoaDon;
 import DTO.NhanVien;
 import DTO.SanPham;
 import DTO.TaiKhoan;
@@ -9,6 +10,7 @@ import GUI.DangNhapGUI;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.swing.UnsupportedLookAndFeelException;
@@ -40,16 +42,21 @@ public class Main {
 //	public static void main(String[] args) {
 //		 new MyConnect();
 //		//SanPhamDAO sanphamdao = new SanPhamDAO();
-//		 ThongKeDAO thongkedao = new ThongKeDAO();
+////		HoaDonDAO hoadon = new HoaDonDAO();
+////		ArrayList<HoaDon> listHD= hoadon.getListHoaDon();
+////		for(HoaDon hd : listHD) {
+////			System.out.println(hd.getTongTien());
+////		}
+//		 HoaDonDAO hoadondao = new HoaDonDAO();
+//		 HoaDon hoadon = new HoaDon(11,4,new Date(2021-04-15),10000,"Đã Thanh Toán");
+//		 System.out.println(hoadondao.addHoaDon(hoadon));
 //		// ArrayList<SanPham> thongke1 = thongkedao.getTopBanChay();
 //		// System.out.println(thongke1.get(0).getTenSP());
-//		ArrayList<SanPham> sp= thongkedao.getTopBanChay();
-//		for(SanPham sp1 : sp) {
-//			System.out.println(sp1.getTenSP());
-//		}
+//	//	ArrayList<SanPham> sp= thongkedao.getTopBanChay();
+//	// System.out.println(sp);
 ////		 for(SanPham sp : thongke) {
-//////			 System.out.println(sp.getTenSP());
-//////			 System.out.println(sp.getSoLuong());
+////			 System.out.println(sp.getTenSP());
+////			 System.out.println(sp.getSoLuong());
 ////		 }
 //		//SanPham sanpham = new SanPham(147,"Kem Chong Nhuc loai xin",1,20,"Cai" , "Kem.png",1000);
 //		

@@ -31,6 +31,8 @@
 		<mapping class="DTO.SanPham" />
 		<mapping class="DTO.CTHoaDon"/>
 		<mapping class="DTO.ThongKe"/>
+		<mapping class="DTO.HoaDon"/>
+		<mapping class="DTO.KhachHang"/>
 	</session-factory>
 
 </hibernate-configuration>
